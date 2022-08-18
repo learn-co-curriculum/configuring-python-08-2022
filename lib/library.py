@@ -13,9 +13,8 @@ modules lie.
 from book import Book
 from fiction.fantasy.game_of_thrones import game_of_thrones
 from nonfiction.biography.leonardo_da_vinci import leonardo_da_vinci
-from nonfiction.biography.autobiography.narrative_of_the_life_of_frederick_douglass import (
-    narrative_of_the_life_of_frederick_douglass
-)
+from nonfiction.biography.autobiography.narrative_of_the_life_of_frederick_douglass \
+    import narrative_of_the_life_of_frederick_douglass
 
 books = [
     game_of_thrones,

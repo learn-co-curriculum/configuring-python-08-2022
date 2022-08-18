@@ -2,102 +2,206 @@
 
 ## Learning Goals
 
-- Learning goal 1.
-- Learning goal 2.
+- Configure an application with modules that can `import` from one another.
+- Find and install packages using PyPI and `pip`.
+- Control dependencies in virtual environments with `pipenv`.
+- Create, read, update, and delete files programmatically with `open()`.
 
 ***
 
 ## Key Vocab
 
-- **Vocab Term**: definition. Continuation of definition.
+- **Interpreter**: a program installed on your computer that looks at and runs
+  Python code. It can be used to open interactive shells and execute code.
+- **Python 2**: an old version of Python. Some thought it would never end! Many
+  environment setups interpret `python` to mean "Python 2", so be explicit with
+  `python3` when possible.
+- **Python 3**: the current version of Python. Our environment setup
+  instructions should direct all `python` commands to Python 3, but it is still
+  always wise to use `python3` in your scripts.
+- **Shebang**: `#!/usr/bin/env python3` should be included at the top of any
+  modules that you intend to give executable permissions to. This tells the
+  command line to execute the program using the `python3` interpreter so you
+  don't need to type `python3` from the command line.
+- **`__init__.py`**: a file required in Python 2 to create a Python package. No
+  longer required in Python 3, but useful for backward compatibility and setting
+  up environments within packages.
+- **Relative Import**: an import that navigates through the application's
+  directory structure with dots (`.`), much like you would from the command
+  line. Relative imports are rarely the best option, and explicitly suggested
+  against in PEP-8.
+- **Absolute Import**: an import that uses the application structure to
+  determine a base directory and any Python packages beneath it.
+- **PYPI**: the **Py**thon **P**ackage **I**ndex. Contains most Python packages
+  that can be retrieved with `pip`. Its search function is notoriously unhelpful.
+- **Google**: a much better tool for finding Python packages by desired
+  functionality.
+- **`pip`**: the package installer from Python. Comes with any installation of
+  Python.
+- **`pipenv`**: a combination of `pip` and a virtual environment. Manages `pip`
+  dependencies and saves them in `Pipfile`s that can be shared with teammates.
 
 ***
 
 ## Introduction
 
-Lorem ipsum dolor sit amet. Ut velit fugit et porro voluptas quia sequi quo
-libero autem qui similique placeat eum velit autem aut repellendus quia. Et
-Quis magni ut fugit obcaecati in expedita fugiat est iste rerum qui ipsam
-ducimus et quaerat maxime sit eaque minus. Est molestias voluptatem et nostrum
-recusandae qui incidunt Quis 33 ipsum perferendis sed similique architecto.
+Welcome to Python PD!
 
-Sed ipsam quidem eum minima maxime et commodi dolores quo ipsa maxime aut vero
-consectetur id velit dignissimos. Et fuga porro eum galisum suscipit qui esse
-blanditiis sed explicabo officia aut mollitia error est illo earum et sint
-laborum! Sit aspernatur accusantium aut doloribus saepe est magni quod aut
-molestiae voluptatem.
+We're starting today with a topic that's often a pain-point for Python
+beginners: application structure. In time, Python's insistence on explicit
+structure will save you time and frustration. That usually takes a while.
 
-Vel inventore minus aut ullam maiores sit internos cupiditate eos odit totam
-eos molestiae galisum. Et ipsum provident ut nihil dicta et dicta doloremque
-eum magnam ullam ut quibusdam quaerat.
+This is going to be structured as a **demo / Q & A**, with four sections of
+material and four opportunities for questions. The curriculum team will keep
+track of the chat throughout, and we will address the questions when each
+section is complete. The first will be a bit longer than the other three.
+
+While this is intended to be a demo rather than a code-along, a GitHub repo
+will be shared in the chat in just a moment. Make sure to `fetch` all branches,
+as they represent the endpoints of each section.
 
 ***
 
-## Lesson Section
+## File and Directory Structure
 
-Lorem ipsum dolor sit amet. Ut velit fugit et porro voluptas quia sequi quo
-libero autem qui similique placeat eum velit autem aut repellendus quia. Et
-Quis magni ut fugit obcaecati in expedita fugiat est iste rerum qui ipsam
-ducimus et quaerat maxime sit eaque minus. Est molestias voluptatem et nostrum
-recusandae qui incidunt Quis 33 ipsum perferendis sed similique architecto.
+If you take a look at this repo, you'll notice a `lib/` directory with a number
+of different subcategories: fiction and nonfiction, then further categories
+within. You should also notice a `book.py` and `library.py`. We will be updating
+these as we go along.
+
+First and foremost: what differences do you notice between the fiction and
+nonfiction directory structures?
+
+<p align="center">
+    <img src="https://www.clipartmax.com/png/middle/186-1862669_rich-thinking-emoji-face-emoji-apple.png"
+         alt="Thinking emoji"
+         width="400"
+         height="400"/>
+</p>
+
+### `__init__.py`
+
+In the olden days (pre-2016 or so), Python needed a little good faith gesture
+from developers to recognize packages as true Python packages: `__init__.py`
+was that gesture.
+
+`__init__.py` in any directory told the interpreted that it should be on the
+lookout for other Python modules in that directory. Python likes its developers
+to be very explicit, so this allowed it to ignore any directories without the
+file. This was useful for image files, markdown, HTML, and more.
+
+> **IMPORTANT: Any package with an `__init__.py` and surrounding Python packages**
+> **can be used in imports.**
+
+Python 3.3 introduced implicit **namespace** packages. These are packages
+without an `__init__.py` file but a `.py` file in some subdirectory. While this
+is not the most explicit approach, it provides some benefits to the developer:
+
+- No need for `__init__.py`. Any directory with a `.py` file in it or a
+  subdirectory is a Python package.
+
+- Separate grouping of tightly- and loosely-related modules: two namespace
+  packages can exist in the same namespace.
+  - _Think about it this way: if I have one set of modules that inherit from
+    a "Tools" base class and one that inherit from another "Machines" base
+    class, they might belong in a `workshop` namespace but not next to one
+    another._
+
+- Using `__init__.py` in Python 3.3+ overrides other packages in the same
+  namespace, and can be used to flag current versions of directories.
+
+#### Should I Use `__init__.py`?
+
+This is a source of some contention in the Python community; just know that in
+PEP guidelines, it's only suggested that you be consistent.
+
+- If you're using `__init__.py` for every package, keep doing that.
+
+- If you're using `__init__.py` for every active package, keep doing that.
+
+- If you're never using `__init__.py`, keep doing that. You're living a blessed
+life.
+
+- If you're using `__init__.py` in some old packages but not new ones, you
+  should probably remove it.
+
+***
+
+## Relative vs. Absolute Imports
+
+Python allows you to retrieve modules and the objects within in two different
+ways: **relative** and **absolute** imports.
+
+### Relative Imports
+
+Let's take a look at "The Narrative of Frederick Douglass" as we discuss
+relative imports:
 
 ```py
-# python code block
-print("statement")
-# => statement
+from ....book import Book
+from ...biography.leonardo_da_vinci import leonardo_da_vinci
+
+narrative_of_the_life_of_frederick_douglass = Book(
+    title="Narrative of the Life of Frederick Douglass",
+    author="Frederick Douglass",
+    inspired=leonardo_da_vinci
+)
 ```
 
-```js
-// javascript code block
-console.log("use these for comparisons between languages.")
-// => use these for comparisons between languages.
+Take a look at the imports at the top. What does this import syntax remind you
+of?
+
+<p align="center">
+    <img src="https://image.similarpng.com/very-thumbnail/2020/07/Thinking-emoji-face-vector-PNG.png"
+         alt="Confused thinking emoji"
+         width="400"
+         height="400"/>
+</p>
+
+The syntax for relative imports in Python is based largely on the commands for
+navigating directories in Unix. A single dot (`.`) denotes the current working
+directory, two refers to the next directory up, and so on.
+
+While relative imports have a familiar syntax, they are recommended against in
+PEP-8. The relative locations of files can change, and although chains of
+directory names can get long, the amount of saved space with relative imports
+is usually trivial.
+
+> NOTE: The absolute import for `Book` is actually much shorter:
+> `from book import Book`. This is because the `book` module is contained in the
+> base Python package in our application structure, `lib/`.
+
+### Absolute Imports
+
+Absolute imports follow the same structure as you've seen with imports from
+Python's standard libraries and external libraries so far. There is a base
+package or module that is added to the path- this would be the top-level package
+containing `__init__.py` in Python 2 or any `.py` file in Python 3- and its
+submodules are accessed through dot notation.
+
+Let's look at `library.py` for some absolute imports:
+
+```py
+from book import Book
+from fiction.fantasy.game_of_thrones import game_of_thrones
+from nonfiction.biography.leonardo_da_vinci import leonardo_da_vinci
+from nonfiction.biography.autobiography.narrative_of_the_life_of_frederick_douglass \
+    import narrative_of_the_life_of_frederick_douglass
 ```
 
-```console
-echo "bash/zshell statement"
-# => bash/zshell statement
-```
-
-<details>
-  <summary>
-    <em>Check for understanding text goes here! <code>Code statements go here.</code></em>
-  </summary>
-
-  <h3>Answer.</h3>
-  <p>Elaboration on answer.</p>
-</details>
-<br/>
-
-***
-
-## Instructions
-
-This is a **test-driven lab**. Run `pipenv install` to create your virtual
-environment and `pipenv shell` to enter the virtual environment. Then run
-`pytest -x` to run your tests. Use these instructions and `pytest`'s error
-messages to complete your work in the `lib/` folder.
-
-Instructions begin here:
-
-- Make sure to specify any class, method, variable, module, package names
-  that `pytest` will check for.
-- Any other instructions go here.
-
-Once all of your tests are passing, commit and push your work using `git` to
-submit.
-
-***
-
-## Conclusion
-
-Conclusion summary paragraph. Include common misconceptions and what students
-will be able to do moving forward.
+While you can see that the last of the imports here is quite long, it should be
+noted that this is the same import statement that one would use in a relative
+format. Going down the line in our directory structure takes up some space, but
+it's very explicit and easy to refactor should the need arise later on.
 
 ***
 
 ## Resources
 
-- [Resource 1](https://www.python.org/doc/essays/blurb/)
-- [Reused Resource][reused resource]
-
-[reused resource]: https://docs.python.org/3/
+- [Python 3 Documentation](https://docs.python.org/3/)
+- [Python Package Index (PyPI)](https://pypi.org/)
+- [Pipenv: Python Dev Workflow for Humans](https://pipenv.pypa.io/en/latest/)
+- [Traps for the Unwary in Python's Import System - Nick Coghlan](http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html)
+- [Absolute vs Relative Imports in Python - RealPython](https://realpython.com/absolute-vs-relative-python-imports/)
+- [What is `__pycache__`? - stackoverflow](https://stackoverflow.com/questions/16869024/what-is-pycache)
+- [Python File I/O - Programiz](https://www.programiz.com/python-programming/file-operation)
