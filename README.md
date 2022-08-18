@@ -145,10 +145,6 @@ PEP-8. The relative locations of files can change, and although chains of
 directory names can get long, the amount of saved space with relative imports
 is usually trivial.
 
-> NOTE: The absolute import for `Book` is actually much shorter:
-> `from book import Book`. This is because the `book` module is contained in the
-> base Python package in our application structure, `lib/`.
-
 ### Absolute Imports
 
 Absolute imports follow the same structure as you've seen with imports from
