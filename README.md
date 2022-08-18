@@ -146,6 +146,7 @@ $ pip uninstall Faker==14.1.0
 # =>     /Users/me/.pyenv/versions/3.8.13/lib/python3.8/site-packages/faker/*
 # => Proceed (Y/n)? Y
 # =>   Successfully uninstalled Faker-14.1.0
+```
 
 All set! In the next lesson, we'll learn about managing dependencies in a
 virtual environment.
