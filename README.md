@@ -5,7 +5,6 @@
 - Configure an application with modules that can `import` from one another.
 - Find and install packages using PyPI and `pip`.
 - Control dependencies in virtual environments with `pipenv`.
-- Create, read, update, and delete files programmatically with `open()`.
 
 ***
 
@@ -51,8 +50,8 @@ We're starting today with a topic that's often a pain-point for Python
 beginners: application structure. In time, Python's insistence on explicit
 structure will save you time and frustration. That usually takes a while.
 
-This is going to be structured as a **demo / Q & A**, with four sections of
-material and four opportunities for questions. The curriculum team will keep
+This is going to be structured as a **demo / Q & A**, with three sections of
+material and three opportunities for questions. The curriculum team will keep
 track of the chat throughout, and we will address the questions when each
 section is complete. The first will be a bit longer than the other three.
 
