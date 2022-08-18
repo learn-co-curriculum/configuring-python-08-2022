@@ -2,10 +2,7 @@
 
 ## Learning Goals
 
-- Configure an application with modules that can `import` from one another.
-- Find and install packages using PyPI and `pip`.
 - Control dependencies in virtual environments with `pipenv`.
-- Create, read, update, and delete files programmatically with `open()`.
 
 ***
 
