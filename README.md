@@ -1,4 +1,4 @@
-# X Lesson Title
+# Configuring Python Applications
 
 ## Learning Goals
 
