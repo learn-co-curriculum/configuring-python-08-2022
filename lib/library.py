@@ -5,6 +5,11 @@ explicit use of python3 in the shebang ensures that the script runs through
 the python3 interpreter, regardless of the python environment.
 '''
 
+'''
+absolute imports can get a bit wordy, but they tell you exactly where different
+modules lie.
+'''
+
 from book import Book
 from fiction.fantasy.game_of_thrones import game_of_thrones
 from nonfiction.biography.leonardo_da_vinci import leonardo_da_vinci
