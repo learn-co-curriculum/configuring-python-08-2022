@@ -2,7 +2,7 @@
 # python is as useful as it is because it is as specific as it is
 # PEP-8 even suggests that you only use absolute imports
 
-from ....book import Book
+from book import Book
 from ...biography.leonardo_da_vinci import leonardo_da_vinci
 
 narrative_of_the_life_of_frederick_douglass = Book(

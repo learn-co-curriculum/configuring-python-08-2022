@@ -40,6 +40,116 @@
 
 ## The Python Package Index (PyPI)
 
+One of Python's best features is its standard library. The standard library
+includes over 200 modules written in C that provide developers access to a
+computer's environment, operating system, and files, as well as important
+functionality like regular expressions (through `re`) and basic database
+connectivity (through `sqlite3`). That being said, there are still many tasks
+that require external libraries. Most of these libraries are available through
+the Python Package Index, or PyPI.
+
+Run `lib/library.py` and you'll see that we're missing a PyPI package called
+"Faker". Let's search for "Faker" on PyPI and implement it in our `Book` class.
+
+<img src="https://curriculum-content.s3.amazonaws.com/python/fakerpypi.png"
+ alt="screenshot of Faker on PyPI"
+ title="screenshot of Faker on PyPI" />
+
+```console
+$ pip install faker
+# => Collecting faker
+# =>   Downloading Faker-14.1.0-py3-none-any.whl (1.6 MB)
+# =>      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 6.4 MB/s eta 0:00:00
+# => Collecting python-dateutil>=2.4
+# =>   Using cached python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
+# => Requirement already satisfied: six>=1.5 in /Users/me/.pyenv/versions/3.8.13/lib/python3.8/site-packages (from python-dateutil>=2.4->faker) (1.16.0)
+# => Installing collected packages: python-dateutil, faker
+# => Successfully installed faker-14.1.0 python-dateutil-2.8.2
+```
+
+Now let's implement it in `book.py`:
+
+```py
+from faker import Faker
+from datetime import datetime
+
+class Book:
+    def __init__(self,
+            title,
+            author, 
+            inspired=None):
+        
+        self.title = title
+        self.author = author
+        self.inspired = inspired
+
+        now = datetime.now()
+        self.published_date = f'{now.month}/{now.day}/{now.year}'
+
+        fake = Faker()
+        self.published_location = fake.city()
+        
+    def __repr__(self):
+        return 'Book({} by {})'.format(self.title, self.author)
+```
+
+> NOTE: we can import `datetime` without a `pip` command- this is because it's
+> part of Python's standard library!
+
+Run `lib/library.py` and you should see something similar to the following:
+
+```console
+# => Book(Game of Thrones by George R. R. Martin)
+# => Published on 8/18/2022 at Hannahfurt.
+# => Book(Leonardo da Vinci by Walter Isaacson)
+# => Published on 8/18/2022 at East Douglaschester.
+# => Book(Narrative of the Life of Frederick Douglass by Frederick Douglass)
+# => Published on 8/18/2022 at North Scottfurt.
+```
+
+***
+
+## I Don't Want Every PyPI Library to Live on my Computer Forever!
+
+Most people don't!
+
+Run `pip freeze` to see what you have installed:
+
+```console
+$ pip freeze
+# => certifi==2022.5.18.1
+# => distlib==0.3.4
+# => Faker==14.1.0
+# => filelock==3.7.1
+# => importlib-metadata==4.11.4
+# => pipenv==2022.5.2
+# => platformdirs==2.5.2
+# => python-dateutil==2.8.2
+# => six==1.16.0
+# => virtualenv==20.14.1
+# => virtualenv-clone==0.5.7
+# => zipp==3.8.0
+```
+
+You might not see all of the same stuff here. That's OK!
+
+We definitely don't need Faker for every project, so let's remove it.
+If you've been coding along, run `pip uninstall Faker==14.1.0`:
+
+```console
+$ pip uninstall Faker==14.1.0
+# => Found existing installation: Faker 14.1.0
+# => Uninstalling Faker-14.1.0:
+# =>   Would remove:
+# =>     /Users/me/.pyenv/versions/3.8.13/bin/faker
+# =>     /Users/me/.pyenv/versions/3.8.13/lib/python3.8/site-packages/Faker-14.1.0.dist-info/*
+# =>     /Users/me/.pyenv/versions/3.8.13/lib/python3.8/site-packages/faker/*
+# => Proceed (Y/n)? Y
+# =>   Successfully uninstalled Faker-14.1.0
+
+All set! In the next lesson, we'll learn about managing dependencies in a
+virtual environment.
+
 ***
 
 ## Resources

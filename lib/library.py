@@ -31,5 +31,5 @@ otherwise, the script runs when another file imports anything from it!
 
 if __name__ == '__main__':
     for book in books:
-        if isinstance(book, Book):
-            print(book)
+        print(book)
+        print(f'Published on {book.published_date} at {book.published_location}.')
