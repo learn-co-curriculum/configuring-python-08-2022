@@ -84,7 +84,7 @@ In the olden days (pre-2016 or so), Python needed a little good faith gesture
 from developers to recognize packages as true Python packages: `__init__.py`
 was that gesture.
 
-`__init__.py` in any directory told the interpreted that it should be on the
+`__init__.py` in any directory told the interpreter that it should be on the
 lookout for other Python modules in that directory. Python likes its developers
 to be very explicit, so this allowed it to ignore any directories without the
 file. This was useful for image files, markdown, HTML, and more.
@@ -137,7 +137,7 @@ Let's take a look at "The Narrative of Frederick Douglass" as we discuss
 relative imports:
 
 ```py
-from ....book import Book
+from book import Book
 from ...biography.leonardo_da_vinci import leonardo_da_vinci
 
 narrative_of_the_life_of_frederick_douglass = Book(
